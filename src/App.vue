@@ -13,22 +13,27 @@
 		{id: 5, name: "Dennis", img: "cat-5.svg"}
 	])
 
-	const newMemmber = ref([])
+	const memberName = ref()
 	const overlay = ref(false)
+	const teams = ref([])
 
-	const chunks = (arr, chunkSize) => {
-		const res = []
-		for (let i = 0; i < arr.length; i += chunkSize) {
-			const chunk = arr.slice(i, i + chunkSize)
-			res.push(chunk)
+	const generateTeams = () => {
+		teams.value = []
+		const shuffleMembers = [...members.value].sort(() => Math.random() - 0.5)
+		console.log(shuffleMembers)
+		for (let i = 0; i < shuffleMembers.length; i += 2) {
+			const chunk = shuffleMembers.slice(i, i + 2)
+			teams.value.push(chunk)
 		}
-		return res
+		console.log(teams.value)
 	}
 
 	const deleteMember = (id) => {members.value = members.value.filter((member) => member.id !== id)}
 	const addMember = () => {
 		const random = Math.floor(Math.random() * cats.length)
-		members.value.push({id: uuidv4() , name: "Steven", img: cats[random]})
+		members.value.push({id: uuidv4() , name: memberName.value, img: cats[random]})
+		memberName.value = ''
+		overlay.value = false
 	}
 	const toggleOverlay = () => {
 		overlay.value = !overlay.value
@@ -55,16 +60,24 @@
 			<p v-else>There are no members yet</p>
 		</div>
 		<div v-if="members">
-			<button class="maker-button">generate teams</button>
+			<button class="maker-button" @click="generateTeams">generate teams</button>
 		</div>
 	</main>
 
 	<div class="maker-overlay" :class="{active: overlay}">
 		<div>
 			<h4>Enter Member Name</h4>
-			<input type="text">
-			<button class="maker-button">save</button>
+			<input type="text" v-model="memberName">
+			<button class="maker-button" @click="addMember">save</button>
 			<span @click="toggleOverlay"><i class="fa-solid fa-xmark"></i></span>
+		</div>
+	</div>
+
+	<div v-if="teams.length > 0" class="maker-teams">
+		<div class="team" v-for="team in teams">
+			<div v-for="member in team">
+				{{ member.name }}
+			</div>
 		</div>
 	</div>
 </template>
