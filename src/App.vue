@@ -47,18 +47,40 @@
 			<span @click="toggleOverlay">+</span>
 			<div>Add member</div>
 		</div>
-		<div class="maker-list">
-			<div v-if="members.length > 0">
-				<div class="maker-item" v-for="member in members" :key="member.id">
-					<div class="maker-item-avatar">
-						<span><img :src="`./cats/${member.img}`" :alt="member.name"></span>
-						<h4>{{ member.name }}</h4>
+
+		<div class="maker-grid">
+			<div class="maker-list">
+				<div v-if="members.length > 0">
+					<div class="maker-item" v-for="member in members" :key="member.id">
+						<div class="maker-item-avatar">
+							<span><img :src="`./cats/${member.img}`" :alt="member.name"></span>
+							<h4>{{ member.name }}</h4>
+						</div>
+						<span class="maker-item-delete" @click="deleteMember(member.id)"><i class="fa-solid fa-xmark"></i></span>
 					</div>
-					<span class="maker-item-delete" @click="deleteMember(member.id)"><i class="fa-solid fa-xmark"></i></span>
 				</div>
+				<p v-else>There are no members yet</p>
 			</div>
-			<p v-else>There are no members yet</p>
+
+			<span class="generate-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+	
+			<div class="maker-teams-container">
+				<div v-if="teams.length > 0" class="maker-teams">
+					<div class="team" v-for="team in teams">
+						<div class="maker-item" v-for="member in team">
+							<div class="maker-item-avatar">
+								<span><img :src="`./cats/${member.img}`" :alt="member.name"></span>
+								<h4>{{ member.name }}</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p v-else>There are no teams yet</p>
+			</div>
 		</div>
+
+
+
 		<div v-if="members">
 			<button class="maker-button" @click="generateTeams">generate teams</button>
 		</div>
@@ -70,14 +92,6 @@
 			<input type="text" v-model="memberName">
 			<button class="maker-button" @click="addMember">save</button>
 			<span @click="toggleOverlay"><i class="fa-solid fa-xmark"></i></span>
-		</div>
-	</div>
-
-	<div v-if="teams.length > 0" class="maker-teams">
-		<div class="team" v-for="team in teams">
-			<div v-for="member in team">
-				{{ member.name }}
-			</div>
 		</div>
 	</div>
 </template>
