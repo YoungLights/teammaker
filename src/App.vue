@@ -1,7 +1,22 @@
 <script setup>
+	import { v4 as uuidv4 } from 'uuid'
 	import { ref } from 'vue'
 
-	function sliceIntoChunks(arr, chunkSize) {
+	const test = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+	const cats = ["cat-1.svg","cat-2.svg","cat-3.svg","cat-4.svg","cat-5.svg","cat-6.svg","cat-7.svg","cat-8.svg"]
+
+	const members = ref([
+		{id: 1, name: "Sascha", img: "cat-2.svg"},
+		{id: 2, name: "Marcel", img: "cat-3.svg"},
+		{id: 3, name: "Andre", img: "cat-8.svg"},
+		{id: 4, name: "Gino", img: "cat-7.svg"},
+		{id: 5, name: "Dennis", img: "cat-5.svg"}
+	])
+
+	const newMemmber = ref([])
+	const overlay = ref(false)
+
+	const chunks = (arr, chunkSize) => {
 		const res = []
 		for (let i = 0; i < arr.length; i += chunkSize) {
 			const chunk = arr.slice(i, i + chunkSize)
@@ -10,25 +25,21 @@
 		return res
 	}
 
-	const deleteMember = (id) => {
-		members.value = members.value.filter((member) => member.id !== id)
+	const deleteMember = (id) => {members.value = members.value.filter((member) => member.id !== id)}
+	const addMember = () => {
+		const random = Math.floor(Math.random() * cats.length)
+		members.value.push({id: uuidv4() , name: "Steven", img: cats[random]})
 	}
-
-	const test = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-	const members = ref([
-		{id: 1, name: "Sascha", img: "cat-2.svg"},
-		{id: 2, name: "Marcel", img: "cat-3.svg"},
-		{id: 3, name: "Andre", img: "cat-8.svg"},
-		{id: 4, name: "Gino", img: "cat-7.svg"},
-		{id: 5, name: "Dennis", img: "cat-5.svg"}
-	])
+	const toggleOverlay = () => {
+		overlay.value = !overlay.value
+	}
 </script>
 
 <template>
 	<main class="maker">
 		<div class="maker-header">
 			<h1>Team Maker</h1>
-			<span>+</span>
+			<span @click="toggleOverlay">+</span>
 			<div>Add member</div>
 		</div>
 		<div class="maker-list">
@@ -44,12 +55,16 @@
 			<p v-else>There are no members yet</p>
 		</div>
 		<div v-if="members">
-			<button class="maker-generate">generate teams</button>
+			<button class="maker-button">generate teams</button>
 		</div>
 	</main>
 
-	<div class="maker-overlay">
-		<input type="text">
-		<button>Add Name</button>
+	<div class="maker-overlay" :class="{active: overlay}">
+		<div>
+			<h4>Enter Member Name</h4>
+			<input type="text">
+			<button class="maker-button">save</button>
+			<span @click="toggleOverlay"><i class="fa-solid fa-xmark"></i></span>
+		</div>
 	</div>
 </template>
