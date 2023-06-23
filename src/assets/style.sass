@@ -1,0 +1,148 @@
+$white: #ffffff
+$black: #000000
+$dark: #0d0f14
+$lime: #ccff00
+	
+* 
+	padding: 0
+	margin: 0
+	box-sizing: border-box
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+
+body
+	background: $black
+	color: $white
+
+.maker
+	height: 100vh
+	display: flex
+	flex-direction: column
+	justify-content: center
+	align-items: center
+
+.maker-header
+	display: flex
+	align-items: center
+	position: relative
+
+	h1
+		color: $lime
+		font-size: 5rem
+		text-transform: uppercase
+
+	span
+		height: 60px
+		width: 60px
+		border: solid 3px $lime
+		cursor: pointer
+		margin-left: 20px
+		display: flex
+		align-items: center
+		justify-content: center
+		border-radius: 15px
+		font-size: 1.2rem
+		font-weight: bolder
+
+		&:hover
+			background: $lime
+			color: $black
+
+			&+div
+				opacity: 1
+				transform: translateX(0)
+
+	div
+		background: $lime
+		color: $black
+		padding: 10px
+		font-weight: bolder
+		border-radius: 15px
+		position: absolute
+		text-align: center
+		width: 130px
+		right: -140px
+		opacity: 0
+		transform: translateX(20px)
+		transition: all 0.2s ease-in-out
+
+.maker-list
+	border: dashed 2px $white
+	padding: 40px
+	border-radius: 20px
+	margin-top: 20px
+	width: 450px
+
+	p
+		text-transform: uppercase
+		font-weight: bold
+		text-align: center
+		letter-spacing: 1px
+
+.maker-item
+	display: flex
+	align-items: center
+	justify-content: space-between
+	margin: 10px 0px
+	background: $dark
+	padding: 10px 20px
+	border-radius: 10px
+
+.maker-item-delete
+	height: 20px
+	width: 20px
+	font-weight: bolder
+	border-radius: 50%
+	display: flex
+	align-items: center
+	justify-content: center
+	font-size: 0.8rem
+	cursor: pointer
+	border: solid 2px $lime
+	color: $lime
+	transition: all 0.2s ease-in-out
+
+	&:hover
+		background: $lime
+		color: $black
+
+.maker-item-avatar
+	display: flex
+	align-items: center
+
+	h4
+		font-size: 1.1rem
+		font-weight: bolder
+		text-transform: uppercase
+
+	span
+		height: 50px
+		width: 50px
+		margin-right: 20px
+		border: dashed 1px $white
+		border-radius: 50%
+		display: flex
+		align-items: center
+		justify-content: center
+
+		img
+			display: block
+			height: 25px
+
+.maker-generate
+	padding: 20px
+	margin-top: 20px
+	font-weight: bolder
+	font-size: 1rem
+	border: none
+	text-transform: uppercase
+	letter-spacing: 2px
+	cursor: pointer
+	border-radius: 10px
+	border: solid 2px $lime
+	color: $lime
+	background: none
+	transition: all 0.1s ease-in-out
+
+	&:hover
+		background: $lime
+		color: $black
